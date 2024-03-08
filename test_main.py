@@ -1,21 +1,16 @@
-import pytest
-from selenium import webdriver
+import main  # Importing the main.py file to test
+import streamlit as st
 
-@pytest.fixture(scope="module")
-def browser():
-    # Set up the Selenium WebDriver
-    driver = webdriver.Chrome()
-    yield driver
-    # Teardown - close the browser after the tests
-    driver.quit()
+def test_title_displayed(capfd):
+    # Redirect stdout to capture print statements
+    import sys
+    sys.stdout = capfd
 
-def test_title_displayed(browser):
-    # Open the application
-    browser.get("http://192.168.0.104:8501")
+    # Call the main function
+    main.main()
 
-    # Check if the title is displayed
-    expected_title = "Про-классифицируй текст"
-    actual_title = browser.title
+    # Get the captured output
+    captured = capfd.readouterr()
 
-    # Check if the actual title matches the expected title
-    assert actual_title == expected_title, "Test Failed: Title is not displayed correctly."
+    # Check if the title is displayed correctly
+    assert "Про-классифицируй текст\n" in captured.out, "Test Failed: Title is not displayed correctly."
