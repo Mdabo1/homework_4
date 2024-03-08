@@ -1,32 +1,21 @@
 import pytest
-from unittest.mock import MagicMock
+from selenium import webdriver
 
-# Import the main module
-import main
+@pytest.fixture(scope="module")
+def browser():
+    # Set up the Selenium WebDriver
+    driver = webdriver.Chrome()
+    yield driver
+    # Teardown - close the browser after the tests
+    driver.quit()
 
-def test_main():
-    # Set up the mocks
-    mock_button = MagicMock(return_value=True)
-    mock_text_input = MagicMock(return_value="This is a positive text.")
-    mock_pipeline = MagicMock(return_value=[
-        {"label": "Positive", "score": 0.9},
-        {"label": "Negative", "score": 0.05},
-        {"label": "Neutral", "score": 0.05},
-    ])
+def test_title_displayed(browser):
+    # Open the application
+    browser.get("http://192.168.0.104:8501")
 
-    # Mock the st module
-    mock_st = MagicMock()
-    main.st = mock_st
+    # Check if the title is displayed
+    expected_title = "Про-классифицируй текст"
+    actual_title = browser.title
 
-    # Call the main function
-    main.main()
-
-    # Check if the output is correct
-    assert mock_pipeline.called
-    assert mock_button.called
-    assert mock_text_input.called
-    assert mock_st.subheader.called
-    assert mock_st.write.called
-
-if __name__ == "__main__":
-    pytest.main([__file__])
+    # Check if the actual title matches the expected title
+    assert actual_title == expected_title, "Test Failed: Title is not displayed correctly."
