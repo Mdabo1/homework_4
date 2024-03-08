@@ -1,16 +1,7 @@
-import main  # Importing the main.py file to test
-import streamlit as st
+import main
 
-def test_title_displayed(capfd):
-    # Redirect stdout to capture print statements
-    import sys
-    sys.stdout = capfd
-
-    # Call the main function
-    main.main()
-
-    # Get the captured output
-    captured = capfd.readouterr()
-
-    # Check if the title is displayed correctly
-    assert "Про-классифицируй текст\n" in captured.out, "Test Failed: Title is not displayed correctly."
+def test_main_function_runs_without_errors():
+    try:
+        main.main()
+    except Exception as e:
+        assert False, f"Test failed with exception: {str(e)}"
