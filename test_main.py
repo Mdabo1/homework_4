@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import MagicMock
 
 def test_main():
     # Set up the mocks
@@ -11,12 +12,16 @@ def test_main():
     ])
 
     # Call the main function
+    # You need to import the `main` module or function here
+    # For example: import main
     main.main()
 
     # Check if the output is correct
     assert mock_pipeline.called
     assert mock_button.called
     assert mock_text_input.called
+    # You also need to mock the `st.subheader` function
+    # For example: mock_st = MagicMock()
     assert mock_st.subheader.called
 
 if __name__ == "__main__":
