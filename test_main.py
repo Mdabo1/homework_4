@@ -1,7 +1,6 @@
 import pytest
 
-@patch("streamlit.st", new_callable=pytest.Mock)
-def test_main(self, mock_st):
+def test_main():
     # Set up the mocks
     mock_button = MagicMock(return_value=True)
     mock_text_input = MagicMock(return_value="This is a positive text.")
@@ -15,10 +14,10 @@ def test_main(self, mock_st):
     main.main()
 
     # Check if the output is correct
-    self.assertTrue(mock_pipeline.called)
-    self.assertTrue(mock_button.called)
-    self.assertTrue(mock_text_input.called)
-    self.assertTrue(mock_st.subheader.called)
+    assert mock_pipeline.called
+    assert mock_button.called
+    assert mock_text_input.called
+    assert mock_st.subheader.called
 
 if __name__ == "__main__":
     pytest.main([__file__])
