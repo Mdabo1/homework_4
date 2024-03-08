@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock
 
-# Import the main module or function
+# Import the main module
 import main
 
 def test_main():
@@ -14,17 +14,19 @@ def test_main():
         {"label": "Neutral", "score": 0.05},
     ])
 
-    # Mock the st module or function
+    # Mock the st module
     mock_st = MagicMock()
+    main.st = mock_st
 
     # Call the main function
-    main.main(mock_button, mock_text_input, mock_pipeline, mock_st)
+    main.main()
 
     # Check if the output is correct
     assert mock_pipeline.called
     assert mock_button.called
     assert mock_text_input.called
     assert mock_st.subheader.called
+    assert mock_st.write.called
 
 if __name__ == "__main__":
     pytest.main([__file__])
