@@ -1,5 +1,6 @@
 import main
 
+
 def test_main_function_runs_without_errors():
     try:
         main.main()
